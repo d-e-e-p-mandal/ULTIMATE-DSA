@@ -1,0 +1,1 @@
+// Optimal Solution : using 2 veriable update max and 2nd max both : Time Complexity : O(N)
