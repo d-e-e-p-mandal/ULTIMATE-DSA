@@ -1,11 +1,7 @@
-### Largest Element in Array
-
-- [GFG](https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1)
-
-
-## Q
 
 # Largest Element in an Array
+
+- [GFG](https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1)
 
 ## 📌 Problem Statement
 Given an array `arr[]`, the task is to find the **largest element** and return it.
