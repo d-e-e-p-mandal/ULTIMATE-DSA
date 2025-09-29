@@ -2,11 +2,11 @@
 
 // Function to find the missing number in an array of size n
 int missingNumber(int* nums, int numsSize) {
-    int ans = 0;
+    int ans = numsSize; // XOR with last index
     for(int i = 0; i < numsSize; i++) {
         ans ^= nums[i] ^ i; // XOR array element with its index
     }
-    return ans ^ numsSize;  // XOR with last index
+    return ans;  
 }
 
 int main() {
