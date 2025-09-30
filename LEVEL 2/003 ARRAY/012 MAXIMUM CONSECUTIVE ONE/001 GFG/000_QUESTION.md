@@ -107,3 +107,5 @@ int main() {
     cout << maxConsecutiveBit(arr) << endl; // Output: 4
     return 0;
 }
+
+```
