@@ -1,39 +1,43 @@
-
+// Optimal ans : Kadane's Algorithm
 #include <bits/stdc++.h>
 using namespace std;
 
-long long maxSubarraySum(int arr[], int n) {
-    long long maxi = LONG_MIN; // maximum sum
-    long long sum = 0;
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;              // current subarray sum
+        int maxSum = INT_MIN;     // maximum sum found so far
 
-    for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];               // include current element
+            maxSum = max(maxSum, sum);    // update maxSum
 
-        sum += arr[i];
-
-        if (sum > maxi) {
-            maxi = sum;
+            if (sum < 0) sum = 0;         // reset sum if negative
         }
 
-        // If sum < 0: discard the sum calculated
-        if (sum < 0) {
-            sum = 0;
-        }
+        return maxSum;
     }
+};
 
-    // To consider the sum of the empty subarray
-    // uncomment the following check:
+int main() {
+    Solution sol;
+    vector<int> nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
 
-    //if (maxi < 0) maxi = 0;
+    int result = sol.maxSubArray(nums);
+    cout << "Maximum Subarray Sum = " << result << endl;
 
-    return maxi;
-}
-
-int main()
-{
-    int arr[] = { -2, 1, -3, 4, -1, 2, 1, -5, 4};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    long long maxSum = maxSubarraySum(arr, n);
-    cout << "The maximum subarray sum is: " << maxSum << endl;
     return 0;
 }
 
+/*
+Example Output:
+Maximum Subarray Sum = 6
+Explanation: The subarray [4,-1,2,1] has the largest sum.
+
+---------------------------------
+Time Complexity:  O(n)
+  → Single pass through the array
+Space Complexity: O(1)
+  → Only constant extra variables used
+*/
