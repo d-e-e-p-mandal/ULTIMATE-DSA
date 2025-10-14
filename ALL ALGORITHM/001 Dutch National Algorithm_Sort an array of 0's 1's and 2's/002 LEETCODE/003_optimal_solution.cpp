@@ -1,37 +1,52 @@
-
 #include <bits/stdc++.h>
 using namespace std;
 
-void sortArray(vector<int>& arr, int n) {
+void sortColors(vector<int>& nums) {
+    int low = 0, mid = 0, high = nums.size() - 1;
 
-    int low = 0, mid = 0, high = n - 1; // 3 pointers
-
+    // Dutch National Flag algorithm
     while (mid <= high) {
-        if (arr[mid] == 0) {
-            swap(arr[low], arr[mid]);
+        if (nums[mid] == 0) {
+            swap(nums[low], nums[mid]);
             low++;
             mid++;
         }
-        else if (arr[mid] == 1) {
+        else if (nums[mid] == 1) {
             mid++;
         }
-        else {
-            swap(arr[mid], arr[high]);
+        else { // nums[mid] == 2
+            swap(nums[mid], nums[high]);
             high--;
         }
     }
 }
 
-int main()
-{
-    int n = 6;
-    vector<int> arr = {0, 2, 1, 2, 0, 1};
-    sortArray(arr, n);
-    cout << "After sorting:" << endl;
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
-    }
+int main() {
+    vector<int> nums = {2, 0, 2, 1, 1, 0};
+
+    cout << "Original Array: ";
+    for (int x : nums) cout << x << " ";
     cout << endl;
+
+    sortColors(nums);
+
+    cout << "Sorted Array:   ";
+    for (int x : nums) cout << x << " ";
+    cout << endl;
+
     return 0;
 }
 
+/*
+-----------------------------------------
+🧩 Example Output:
+Original Array: 2 0 2 1 1 0 
+Sorted Array:   0 0 1 1 2 2 
+-----------------------------------------
+
+⏱️ Time Complexity:  O(N)
+   → Single traversal with constant swaps.
+
+💾 Space Complexity: O(1)
+   → In-place sorting, no extra data structures.
+*/
