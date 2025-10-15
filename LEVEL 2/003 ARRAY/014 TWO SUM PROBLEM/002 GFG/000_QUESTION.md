@@ -107,5 +107,4 @@ int main() {
     cout << (hasPairWithSum(arr, target) ? "true" : "false") << endl;
     return 0;
 }
-
 ```
