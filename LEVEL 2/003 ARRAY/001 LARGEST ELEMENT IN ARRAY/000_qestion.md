@@ -1,4 +1,3 @@
-
 # Largest Element in an Array
 
 - [GFG](https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1)
