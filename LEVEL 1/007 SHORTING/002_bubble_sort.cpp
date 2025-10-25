@@ -2,13 +2,17 @@
 
 void bubbleSort(int *arr, int size) {
     for(int i=size-1; i>=0; i--) {
+        int flag = 1;
         for(int j = 0; j<i; j++) {
             if(arr[j] > arr[j+1]) {
+                flag = 0;
                 int temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
             }
         }
+
+        if(flag) return;
     }
 }
 

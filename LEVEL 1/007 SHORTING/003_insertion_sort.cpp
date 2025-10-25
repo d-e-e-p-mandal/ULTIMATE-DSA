@@ -1,9 +1,11 @@
 #include<stdio.h>
 
 void insertionSort(int *arr, int size) {
-    for(int i=size-1; i>=0; i--) {
-        for(int j = 0; j<i; j++) {
-          
+    for(int i=1; i<size; i++) {
+        for(int j = i; j>0 && arr[j-1] > arr[j]; j--) {
+          int temp = arr[j-1];
+          arr[j-1] = arr[j];
+          arr[j] = temp;
         }
     }
 }
