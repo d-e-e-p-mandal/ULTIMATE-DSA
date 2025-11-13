@@ -1,13 +1,15 @@
-# Missing And Repeating
+# Count Inversions
 
-[GeeksforGeeks Problem Link](https://www.geeksforgeeks.org/problems/find-missing-and-repeating2512/)
+[GeeksforGeeks Problem Link](https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1)
 
 ---
 
 ## 📌 Problem Statement
-Given an unsorted array `arr[]` of size `n`, containing elements from the range `1` to `n`,  
-it is known that one number in this range is **missing**, and another number **occurs twice** in the array.  
-Find both the **duplicate** number and the **missing** number.
+Given an array of integers `arr[]`, you need to find the **Inversion Count** of the array.  
+
+An **inversion** is a pair `(i, j)` such that:
+- `i < j` and  
+- `arr[i] > arr[j]`
 
 ---
 
@@ -15,101 +17,133 @@ Find both the **duplicate** number and the **missing** number.
 
 ### Example 1
 **Input:**  
-`arr = [2, 2]`  
+`arr[] = [2, 4, 1, 3, 5]`  
 **Output:**  
-`[2, 1]`  
+`3`  
 **Explanation:**  
-Repeating number is `2` and the missing number is `1`.
+The sequence `[2, 4, 1, 3, 5]` has three inversions:  
+`(2, 1)`, `(4, 1)`, `(4, 3)`.
 
 ---
 
 ### Example 2
 **Input:**  
-`arr = [1, 3, 3]`  
+`arr[] = [2, 3, 4, 5, 6]`  
 **Output:**  
-`[3, 2]`  
+`0`  
 **Explanation:**  
-Repeating number is `3` and the missing number is `2`.
+The sequence is already sorted, so there are **no inversions**.
 
 ---
 
 ### Example 3
 **Input:**  
-`arr = [4, 3, 6, 2, 1, 1]`  
+`arr[] = [10, 10, 10]`  
 **Output:**  
-`[1, 5]`  
+`0`  
 **Explanation:**  
-Repeating number is `1` and the missing number is `5`.
+All elements are equal, hence **no inversions**.
 
 ---
 
 ## 🎯 Constraints
-- `2 ≤ n ≤ 10⁶`  
-- `1 ≤ arr[i] ≤ n`
+- `1 ≤ arr.size() ≤ 10⁵`  
+- `1 ≤ arr[i] ≤ 10⁴`
 
 ---
 
 ## ⏱️ Expected Complexities
 | Complexity Type | Description |
 |-----------------|-------------|
-| **Time Complexity** | `O(n)` |
-| **Space Complexity** | `O(1)` |
+| **Time Complexity** | `O(n log n)` |
+| **Space Complexity** | `O(n)` |
 
 ---
 
 ## 🏢 Company Tags
-Amazon, Microsoft, Google, Flipkart, Adobe, TCS
+Flipkart, Amazon, Microsoft, MakeMyTrip, Adobe, BankBazaar, Myntra
 
 ---
 
 ## 🏷️ Topic Tags
 - Array  
-- Mathematics  
-- Bit Manipulation  
+- Divide and Conquer  
+- Sorting  
+- Data Structures  
+- Algorithms  
 
 ---
 
-## 💡 Approach – Mathematical Formula
+## 💡 Approach – Merge Sort Based Counting
 
 ### 🔹 Steps:
-1. Compute `S = n*(n+1)/2` and `P = n*(n+1)*(2n+1)/6`.  
-2. Find `S1 = Σarr[i]` and `P1 = Σ(arr[i]²)`.  
-3. Calculate `diff = S - S1` and `sum = (P - P1)/diff`.  
-4. Get `missing = (diff + sum)/2` and `repeating = missing - diff`.  
-5. Return `[repeating, missing]`.
+1. Divide the array into two halves recursively (like merge sort).  
+2. While merging two sorted halves:
+   - If `arr[i] > arr[j]`, then all elements from `i` to `mid` are greater than `arr[j]`.  
+   - Add `(mid - i + 1)` to inversion count.  
+3. Continue merging until the array is fully sorted.  
+4. Return the total count.
 
 ---
 
 ## 🧠 Algorithm
-1. Compute total sum and total square sum for numbers `1..n`.  
-2. Compute actual sum and square sum from the array.  
-3. From their differences, derive missing and repeating numbers.  
-4. Return the pair `[repeating, missing]`.
+1. Use a modified merge sort to count inversions during merging.  
+2. If left element > right element, increment count by remaining elements in the left subarray.  
+3. Return total inversion count after full merge.
 
 ---
 
 ## 🖥️ C++ Implementation
 
 ```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
 class Solution {
 public:
-    vector<int> findTwoElement(vector<int>& arr, int n) {
-        long long S = (long long)n * (n + 1) / 2;
-        long long P = (long long)n * (n + 1) * (2 * n + 1) / 6;
+    long long merge(long long arr[], long long temp[], long long left, long long mid, long long right) {
+        long long i = left, j = mid, k = left, invCount = 0;
 
-        long long S1 = 0, P1 = 0;
-        for (int x : arr) {
-            S1 += (long long)x;
-            P1 += (long long)x * x;
+        while (i <= mid - 1 && j <= right) {
+            if (arr[i] <= arr[j]) temp[k++] = arr[i++];
+            else {
+                temp[k++] = arr[j++];
+                invCount += (mid - i);
+            }
         }
 
-        long long diff = S - S1;              // M - R
-        long long diff2 = (P - P1) / diff;    // M + R
+        while (i <= mid - 1) temp[k++] = arr[i++];
+        while (j <= right) temp[k++] = arr[j++];
 
-        long long M = (diff + diff2) / 2;
-        long long R = M - diff;
+        for (i = left; i <= right; i++) arr[i] = temp[i];
 
-        return {(int)R, (int)M};
+        return invCount;
+    }
+
+    long long mergeSort(long long arr[], long long temp[], long long left, long long right) {
+        long long mid, invCount = 0;
+        if (right > left) {
+            mid = (left + right) / 2;
+
+            invCount += mergeSort(arr, temp, left, mid);
+            invCount += mergeSort(arr, temp, mid + 1, right);
+
+            invCount += merge(arr, temp, left, mid + 1, right);
+        }
+        return invCount;
+    }
+
+    long long inversionCount(long long arr[], long long N) {
+        long long temp[N];
+        return mergeSort(arr, temp, 0, N - 1);
     }
 };
+
+int main() {
+    long long arr[] = {2, 4, 1, 3, 5};
+    long long N = 5;
+    Solution ob;
+    cout << ob.inversionCount(arr, N);
+    return 0;
+}
 ```
