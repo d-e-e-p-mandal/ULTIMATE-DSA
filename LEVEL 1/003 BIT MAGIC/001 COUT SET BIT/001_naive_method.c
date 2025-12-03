@@ -2,6 +2,7 @@
 // Program: Count number of set bits (1s) in an integer
 // Method: Naive / Simple Iterative Method
 
+
 #include <stdio.h>
 
 // Function to count set bits
