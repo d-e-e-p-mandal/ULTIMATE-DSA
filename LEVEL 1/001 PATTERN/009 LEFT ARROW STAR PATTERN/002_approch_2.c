@@ -1,0 +1,53 @@
+/*
+N = 5 
+*****
+  ****
+    ***
+      **
+        *
+      **
+    ***
+  ****
+*****
+*/
+
+#include<stdio.h>
+void pattern(int n) {
+    for(int i=0; i<2*n-1; i++) {
+        int space = (i<n) ? n-i-1 : i-n+1;
+        int star = (i<n) ? n-i: i-n+2;
+        for(int j=0; j< space; j++) {
+            printf(" ");
+        }
+        for(int j=0; j<star; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+int main() {
+    int n;
+
+    printf("Enter N : ");
+    scanf("%d",&n);
+    
+    pattern(n);
+    return 0;
+}
+
+/*Output :
+Enter N : 7
+*******
+  ******
+    *****
+      ****
+        ***
+          **
+            *
+          **
+        ***
+      ****
+    *****
+  ******
+*******
+*/
