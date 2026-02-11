@@ -80,71 +80,58 @@ v.assign({1,2,3});
 
 ## Adding Elements
 
-1️⃣ Add at Back
-```cpp
-push_back()
-```
+### v.push_back(value)
 Adds element at the end.
 ```cpp
+vecot<int> v;
 v.push_back(10);
 ```
 Time Complexity:
-	•	Average: O(1)
-	•	Worst case: O(n) (when reallocation happens)
+•	Average: O(1)
+•	Worst case: O(n) (when reallocation happens)
 
 
-```cpp
-v.emplace_back(args...);
-```
+### v.emplace_back(args...);
 emplace_back avoids extra copy.
 Constructs element directly at the end.
-
 
 ```cpp
 v.emplace_back(20);
 ```
 Time Complexity:
-	•	Average: O(1)
-	•	Worst case: O(n)
+•	Average: O(1)
+•	Worst case: O(n)
 
 👉 Faster than push_back() for complex objects (avoids extra copy).
 
-⸻
-
-2️⃣ Add at Front
+### v.emplace(args...);
 ```cpp
-v.insert(v.begin(), 5);
+vector<int> v = {10, 20, 40};
+v.emplace(v.begin() + 2, 30);
 ```
-Time Complexity:
-	•	O(n)
-
+Time Complexity: O(n)
 👉 All elements shift right.
 
-⸻
+### v.insert(position, value);
 
-3️⃣ Add in Middle
 ```cpp
 v.insert(v.begin() + index, value);
 ```
-Time Complexity:
-	•	O(n)
+Time Complexity: O(n)
+👉 All elements shift right.
 
-👉 Elements after position shift right.
 
-Insert multiple copies:
+### v.insert(position, count, value);
 ```cpp
 v.insert(v.begin(), 3, 5);  // insert 5 three(3) times
 ```
+Time Complexity: O(n)
+👉 All elements shift right.
 
-```cpp
-v.emplace(pos, args...);
-```
-
-⸻
-	•	Back insertion → O(1) amortized
-	•	Front insertion → O(n)
-	•	Middle insertion → O(n)
-	•	Vector is fast only at the back
+•	Back insertion → O(1) amortized
+•	Front insertion → O(n)
+•	Middle insertion → O(n)
+•	Vector is fast only at the back
 
 ⸻
 
@@ -152,9 +139,9 @@ v.emplace(pos, args...);
 ```cpp
 cout << v[0];       // no bounds checking
 cout << v.at(1);    // safe (throws exception)
-cout << v.front(); // first element
-cout << v.back();  // last element
-v.data();          // pointer to underlying array
+cout << v.front();  // first element
+cout << v.back();   // last element
+v.data();           // pointer to underlying array
 ```
 ⸻
 
@@ -169,6 +156,7 @@ v.resize(n);           // resize (default values)
 v.resize(n, value);    // resize with value
 v.shrink_to_fit();     // reduce capacity
 ```
+
 Example:
 ```cpp
 if(v.empty()) {
