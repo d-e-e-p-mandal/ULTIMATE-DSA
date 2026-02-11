@@ -78,12 +78,13 @@ v.assign({1,2,3});
 ```
 
 
-2. Adding Elements
+## Adding Elements
 
 1️⃣ Add at Back
-### push_back()
+```cpp
+push_back()
+```
 Adds element at the end.
-
 ```cpp
 v.push_back(10);
 ```
@@ -91,12 +92,13 @@ Time Complexity:
 	•	Average: O(1)
 	•	Worst case: O(n) (when reallocation happens)
 
-⸻
 
-
-### emplace_back(args...);
+```cpp
+v.emplace_back(args...);
+```
 emplace_back avoids extra copy.
 Constructs element directly at the end.
+
 
 ```cpp
 v.emplace_back(20);
