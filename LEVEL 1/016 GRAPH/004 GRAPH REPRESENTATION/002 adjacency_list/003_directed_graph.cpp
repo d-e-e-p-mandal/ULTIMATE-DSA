@@ -18,7 +18,7 @@ int main() {
         cin >> u >> v;
 
         adj[u].push_back(v);
-        adj[v].push_back(u);   // Remove this line for directed graph
+        //adj[v].push_back(u);   // Remove this line for directed graph
     }
 
     cout << "\nAdjacency List:\n";
@@ -44,4 +44,10 @@ Adjacency List:
 1 -> 2 3 
 2 -> 1 
 3 -> 1 
+*/
+
+
+/*
+Time Complexity: O(n + m)
+Space Complexity: O(m)
 */
