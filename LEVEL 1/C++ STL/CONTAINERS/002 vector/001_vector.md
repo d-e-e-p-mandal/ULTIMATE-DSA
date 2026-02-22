@@ -32,7 +32,7 @@ vector<int> v2(v1);  // deep copy
 ```cpp
 vector<T> v(move(other_vector));              // move constructor
 vector<int> v1(1,2,3);
-vector<int> v2(move(v1));  // shallow copy
+vector<int> v2(move(v1));  
 ```
 
 ```cpp
@@ -314,17 +314,24 @@ v.reserve(100);   // pre-allocate memory
 vector<int> a = {1, 2};
 vector<int> b = {3, 4};
 
+// both are Swap function
 a.swap(b);
-swap(a, b);
+swap(a, b); // internally a.swap(b)
 ```
 
 ⸻
 
-16. 2D Vector (Matrix)
+## 2D Vector (Matrix) 
+1. **2D Vector Declaration :**
+
 ```cpp
-vector<vector<int>> mat(3, vector<int>(4, 0));
+vector<vector<int>> vec; // empty vector
+vector<vector<int>> vec(10); // 10 row size
+vector<vector<int>> mat(3, vector<int>(4)); // 3 row, 4 col
+vector<vector<int>> mat(3, vector<int>(4, 0)); // 3 row, 4 col, fill with 0
 ```
-Traversal:
+
+2. **Traversal:**
 ```cpp
 for(int i = 0; i < mat.size(); i++) {
     for(int j = 0; j < mat[i].size(); j++) {
