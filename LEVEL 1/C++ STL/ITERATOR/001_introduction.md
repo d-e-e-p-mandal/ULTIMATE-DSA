@@ -106,35 +106,26 @@
 ---
 
 # 1. Introduction
+- An **iterator** is an object used to traverse elements stored inside a container.
 
-An **iterator** is an object used to traverse elements stored inside a container.
-
-The simplest way to think about an iterator is:
-
-```text
-Iterator = Generalized Pointer
-```
+- The simplest way to think about an iterator is: `Iterator = Generalized Pointer`
 
 An iterator can be used to:
-
 - Access elements
 - Traverse elements
 - Modify elements when permitted
 - Define ranges
 - Connect containers to STL algorithms
 
-Example:
-
+**Example:**
 ```cpp
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
 int main()
 {
     vector<int> v = {10, 20, 30};
-
     vector<int>::iterator it = v.begin();
 
     cout << *it;
@@ -143,19 +134,15 @@ int main()
 }
 ```
 
-Output:
-
-```text
-10
-```
+Output: `10`
 
 ---
 
 # 2. What Is an Iterator?
 
-An iterator represents a position in a sequence.
+- An iterator represents a position in a sequence.
 
-Example:
+**Example:**
 
 ```text
 +----+----+----+----+
@@ -238,17 +225,14 @@ is typically a class-like iterator object that internally navigates linked-list 
 
 Different STL containers use different internal data structures.
 
-Examples:
-
-```text
-vector          → contiguous dynamic array
-deque            → segmented/block-based sequence
-list             → doubly linked list
-forward_list     → singly linked list
-map              → ordered tree
-set              → ordered tree
-unordered_map    → hash table
-```
+**Examples:**
+- vector           → contiguous dynamic array
+- deque            → segmented/block-based sequence
+- list             → doubly linked list
+- forward_list     → singly linked list
+- map              → ordered tree
+- set              → ordered tree
+- unordered_map    → hash table
 
 Without iterators, every algorithm would need container-specific implementations.
 
@@ -281,8 +265,8 @@ The algorithm does not need to know the internal details of the vector.
 | Generic STL abstraction | Limited | Yes |
 | Can be a class object | Raw pointer is not a class object | Often yes |
 
-Important:
 
+**Important:**
 > A raw pointer can satisfy iterator requirements in appropriate contexts, but an iterator does not have to be a pointer.
 
 ---
@@ -290,20 +274,15 @@ Important:
 # 6. Iterator Range
 
 STL algorithms normally use a half-open range:
-
 ```cpp
 [first, last)
 ```
 
-This means:
+**This means:**
+- first → included
+- last  → excluded
 
-```text
-first → included
-last  → excluded
-```
-
-Example:
-
+**Example:**
 ```cpp
 vector<int> v = {10, 20, 30, 40};
 
@@ -373,11 +352,7 @@ auto it = v.begin();
 cout << *it;
 ```
 
-Output:
-
-```text
-10
-```
+Output: `10`
 
 If the container is empty:
 
@@ -470,11 +445,8 @@ auto it = v.rbegin();
 cout << *it;
 ```
 
-Output:
+Output: `30`
 
-```text
-30
-```
 
 ---
 
@@ -489,11 +461,8 @@ for (auto it = v.rbegin(); it != v.rend(); ++it)
 }
 ```
 
-Output:
+Output: `30 20 10`
 
-```text
-30 20 10
-```
 
 Do not dereference `rend()`.
 
@@ -521,31 +490,31 @@ for (auto it = v.crbegin(); it != v.crend(); ++it)
 
 # 15. Iterator Declaration
 
-Old-style explicit declaration:
+### Old-style explicit declaration:
 
 ```cpp
 vector<int>::iterator it;
 ```
 
-Const iterator:
+### Const iterator:
 
 ```cpp
 vector<int>::const_iterator it;
 ```
 
-Reverse iterator:
+## Reverse iterator:
 
 ```cpp
 vector<int>::reverse_iterator it;
 ```
 
-Const reverse iterator:
+### Const reverse iterator:
 
 ```cpp
 vector<int>::const_reverse_iterator it;
 ```
 
-Modern C++ usually prefers:
+### Modern C++ usually prefers:
 
 ```cpp
 auto it = v.begin();
@@ -555,27 +524,17 @@ auto it = v.begin();
 
 # 16. Dereferencing an Iterator
 
-Use:
-
-```cpp
-*it
-```
+Use: `*it`
 
 Example:
-
 ```cpp
 vector<int> v = {10, 20, 30};
 
 auto it = v.begin();
-
 cout << *it;
 ```
 
-Output:
-
-```text
-10
-```
+Output: `10`
 
 For a mutable iterator:
 
@@ -589,29 +548,19 @@ can modify the element if the container permits it.
 
 # 17. Increment
 
-Prefix increment:
-
+**Prefix increment:**
 ```cpp
 ++it;
 ```
+- moves to the next position.
 
-moves to the next position.
-
-Postfix increment:
-
+**Postfix increment:**
 ```cpp
 it++;
 ```
+- also moves to the next position.
 
-also moves to the next position.
-
-For most traversal loops:
-
-```cpp
-++it
-```
-
-is preferred.
+For most traversal loops: `++it` is preferred.
 
 ---
 
@@ -690,28 +639,19 @@ Output:
 30
 ```
 
-For a `list` iterator:
-
-```cpp
-it + 2
-```
-
-is not supported.
+**For a `list` iterator:** `it + 2` is not supported.
 
 ---
 
 # 21. Iterator Categories
 
-C++ has six standard iterator categories/concepts:
-
-```text
-Input
-Output
-Forward
-Bidirectional
-Random Access
-Contiguous
-```
+**C++ has six standard iterator categories/concepts:**
+- Input
+- Output
+- Forward
+- Bidirectional
+- Random Access
+- Contiguous
 
 The traditional category hierarchy is:
 
@@ -754,7 +694,6 @@ Example:
 ```cpp
 #include <iostream>
 #include <iterator>
-
 using namespace std;
 
 int main()
@@ -768,11 +707,8 @@ int main()
 ```
 
 Input iterators are commonly used for:
-
-```text
-Input streams
-Single-pass input sequences
-```
+- Input streams
+- Single-pass input sequences
 
 Important property:
 
@@ -1820,12 +1756,7 @@ These are often simpler than manually writing the erase-remove idiom.
 # 63. `replace()`
 
 ```cpp
-replace(
-    v.begin(),
-    v.end(),
-    10,
-    100
-);
+replace(v.begin(), v.end(), 10, 100);
 ```
 
 Every occurrence of `10` is replaced by `100`.
@@ -1835,9 +1766,7 @@ Every occurrence of `10` is replaced by `100`.
 # 64. `replace_if()`
 
 ```cpp
-replace_if(
-    v.begin(),
-    v.end(),
+replace_if(v.begin(), v.end(),
     [](int x)
     {
         return x < 0;

@@ -103,14 +103,11 @@
 
 # 1. Introduction
 
-`std::priority_queue` is a **container adapter** provided by the C++ Standard Library.
+- `std::priority_queue` is a **container adapter** provided by the C++ Standard Library.
 
 Unlike a normal queue, which follows:
-
-```text
-FIFO
-First In, First Out
-```
+- FIFO
+- First In, First Out
 
 a priority queue removes elements according to their **priority**.
 
@@ -287,11 +284,7 @@ priority_queue<string> pq;
 ## Min Heap
 
 ```cpp
-priority_queue<
-    int,
-    vector<int>,
-    greater<int>
-> pq;
+priority_queue<int, vector<int>,greater<int>> pq;
 ```
 
 This makes the smallest element the top element.
@@ -385,14 +378,10 @@ Default:
 ```cpp
 less<T>
 ```
+This creates a: `Max Heap`
 
-This creates a:
 
-```text
-Max Heap
-```
-
-For a min heap:
+**For a min heap:**
 
 ```cpp
 greater<T>
@@ -876,14 +865,9 @@ A range of elements can be used to initialize a priority queue.
 Example:
 
 ```cpp
-vector<int> v = {
-    10, 40, 20, 50, 30
-};
+vector<int> v = {10, 40, 20, 50, 30};
 
-priority_queue<int> pq(
-    v.begin(),
-    v.end()
-);
+priority_queue<int> pq(v.begin(),v.end());
 ```
 
 The resulting priority queue has:
@@ -933,14 +917,10 @@ priority_queue<int> pq2(std::move(pq1));
 The underlying resources can be transferred to `pq2`.
 
 After the move:
+- pq2 -> contains the transferred contents
+- pq1 -> valid but unspecified state
 
-```text
-pq2 -> contains the transferred contents
-pq1 -> valid but unspecified state
-```
-
-Include:
-
+**Include:**
 ```cpp
 #include <utility>
 ```
@@ -954,8 +934,7 @@ std::move()
 ---
 
 # 27. `push()`
-
-Adds an element to the priority queue.
+- Adds an element to the priority queue.
 
 Syntax:
 
@@ -972,21 +951,9 @@ pq.push(10);
 pq.push(50);
 pq.push(20);
 ```
+- The heap automatically rearranges itself. `Top: 50`
 
-The heap automatically rearranges itself.
-
-Top:
-
-```text
-50
-```
-
-### Complexity
-
-```text
-O(log n)
-```
-
+**Time Complexity:** `O(log n)`
 because the new element may move upward through the heap.
 
 ---
@@ -1014,11 +981,7 @@ This constructs the pair directly.
 
 ### Complexity
 
-Usually:
-
-```text
-O(log n)
-```
+Usually: O(log n)
 
 plus the cost of constructing/moving/comparing the element.
 
@@ -1217,10 +1180,7 @@ subject to the underlying container and allocator characteristics.
 Provide an existing object/value:
 
 ```cpp
-pair<int, string> p = {
-    100,
-    "Amit"
-};
+pair<int, string> p = {100, "Amit"};
 
 pq.push(p);
 ```
