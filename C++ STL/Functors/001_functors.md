@@ -35,11 +35,7 @@ Call it like a function:
 cout << obj(10, 20);
 ```
 
-Output:
-
-```text
-30
-```
+Output: `30`
 
 Conceptually:
 
@@ -90,10 +86,8 @@ Function-like Object
 # 3. Basic Syntax
 
 ```cpp
-class ClassName
-{
+class ClassName {
 public:
-
     ReturnType operator()(parameters)
     {
         // implementation
@@ -303,18 +297,9 @@ The functor is an object that contains callable behavior.
 
 # 9. Why Use Functors?
 
-Functors are useful because they can combine:
-
-```text
-Data
-+
-Behavior
-```
-
-inside one object.
+Functors are useful because they can combine: `Data + Behavior` inside one object.
 
 A functor can:
-
 - Store state
 - Remember previous calls
 - Have member variables
@@ -337,14 +322,11 @@ Example:
 
 ```cpp
 #include <iostream>
-
 using namespace std;
 
-class Multiplier
-{
+class Multiplier {
     int factor;
-
-public:
+  public:
 
     Multiplier(int x)
     {
@@ -367,11 +349,7 @@ int main()
 }
 ```
 
-Output:
-
-```text
-30
-```
+Output: `30`
 
 The object contains:
 
@@ -397,7 +375,6 @@ Example:
 
 ```cpp
 #include <iostream>
-
 using namespace std;
 
 class Counter
@@ -406,8 +383,7 @@ class Counter
 
 public:
 
-    Counter()
-        : count(0)
+    Counter(): count(0)
     {
     }
 
@@ -415,9 +391,7 @@ public:
     {
         ++count;
 
-        cout << "Called "
-             << count
-             << " times\n";
+        cout << "Called " << count << " times\n";
     }
 };
 
@@ -496,6 +470,24 @@ The object maintains state.
 A functor can make its call operator `const`:
 
 ```cpp
+class Counter {
+    int count = 0;
+
+public:
+    bool operator()(int x) {
+        count++;       // modifies object
+        return x > 10;
+    }
+};
+```
+
+```cpp
+bool operator()(int x) const {
+    count++; // ❌ cannot modify count
+}
+```
+
+```cpp
 class Square
 {
 public:
@@ -546,6 +538,8 @@ Calling this object does not modify its observable state.
 ---
 
 # 15. Mutable State in a Const Functor
+- **Important exception:** const on operator() does not mean the entire object can never change.
+- `mutable int count` So mutable specifically says: “This member is allowed to change even when the object is const.”
 
 A data member declared:
 
@@ -559,7 +553,6 @@ Example:
 
 ```cpp
 #include <iostream>
-
 using namespace std;
 
 class Counter
@@ -568,8 +561,7 @@ class Counter
 
 public:
 
-    Counter()
-        : count(0)
+    Counter(): count(0)
     {
     }
 
@@ -697,7 +689,6 @@ Functors can be class templates.
 
 ```cpp
 #include <iostream>
-
 using namespace std;
 
 template<typename T>
@@ -885,7 +876,6 @@ using namespace std;
 class Descending
 {
 public:
-
     bool operator()(int a, int b) const
     {
         return a > b;
@@ -939,6 +929,61 @@ sort(v.begin(), v.end(), compare);
 ```
 
 Both are valid.
+
+
+
+### Custom Sorting:
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Ascending
+{
+public:
+    bool operator()(int a, int b) const
+    {
+        return a < b;
+    }
+};
+
+class Descending
+{
+public:
+    bool operator()(int a, int b) const
+    {
+        return a > b;
+    }
+};
+
+template <typename Iterator, typename Compare = Ascending>
+void mySort(Iterator first, Iterator last, Compare comp = Compare{})
+{
+    for (auto i = first; i != last; ++i)
+    {
+        for (auto j = i + 1; j != last; ++j)
+        {
+            if (comp(*j, *i))
+            {
+                swap(*i, *j);
+            }
+        }
+    }
+}
+
+int main()
+{
+    vector<int> v = {5, 1, 8, 3, 9};
+
+    // Default → Ascending
+    mySort(v.begin(), v.end());
+
+    for (int x : v)
+        cout << x << " ";
+
+    return 0;
+}
+```
 
 ---
 
@@ -1157,11 +1202,7 @@ public:
 Use:
 
 ```cpp
-auto it = find_if(
-    v.begin(),
-    v.end(),
-    IsGreaterThan10()
-);
+auto it = find_if(v.begin(), v.end(), IsGreaterThan10());
 ```
 
 If found:
@@ -1192,10 +1233,7 @@ public:
 Usage:
 
 ```cpp
-v.erase(
-    remove_if(v.begin(), v.end(), IsEven()),
-    v.end()
-);
+v.erase(remove_if(v.begin(), v.end(), IsEven()),v.end());
 ```
 
 This is the traditional erase-remove idiom for a vector.
@@ -1352,7 +1390,6 @@ std::greater<int>
 class Descending
 {
 public:
-
     bool operator()(int a, int b) const
     {
         return a > b;
@@ -1840,11 +1877,7 @@ class Multiply
     int factor;
 
 public:
-
-    Multiply(int f)
-        : factor(f)
-    {
-    }
+    Multiply(int f): factor(f) {}
 
     int operator()(int x) const
     {
@@ -1861,11 +1894,7 @@ Multiply triple(3);
 cout << triple(10);
 ```
 
-Output:
-
-```text
-30
-```
+Output: `30`
 
 ---
 
@@ -1880,13 +1909,11 @@ class Multiplier
 
 public:
 
-    Multiplier()
-        : factor(1)
+    Multiplier(): factor(1)
     {
     }
 
-    Multiplier(int f)
-        : factor(f)
+    Multiplier(int f) : factor(f)
     {
     }
 
@@ -2013,11 +2040,7 @@ std::function<int(int)> operation = Square();
 cout << operation(5);
 ```
 
-Output:
-
-```text
-25
-```
+Output: `25`
 
 `std::function` provides a type-erased wrapper for callable objects.
 
@@ -2188,11 +2211,7 @@ If you intentionally want an algorithm to operate on the same functor object, yo
 
 CountEven counter;
 
-for_each(
-    v.begin(),
-    v.end(),
-    std::ref(counter)
-);
+for_each(v.begin(), v.end(), std::ref(counter));
 ```
 
 Now the algorithm receives a reference wrapper referring to the original object.
@@ -2216,11 +2235,7 @@ Example:
 ```cpp
 Counter counter;
 
-std::for_each(
-    v.begin(),
-    v.end(),
-    std::ref(counter)
-);
+std::for_each(v.begin(), v.end(), std::ref(counter));
 ```
 
 Conceptually:
@@ -2511,10 +2526,7 @@ Example:
 ```cpp
 struct CompareName
 {
-    bool operator()(
-        const string& a,
-        const string& b
-    ) const
+    bool operator()(const string& a, const string& b) const
     {
         return a < b;
     }
@@ -2564,7 +2576,6 @@ Example:
 ```cpp
 #include <iostream>
 #include <map>
-
 using namespace std;
 
 struct Descending

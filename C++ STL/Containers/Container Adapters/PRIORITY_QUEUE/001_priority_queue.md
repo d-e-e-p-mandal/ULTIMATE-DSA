@@ -1863,10 +1863,7 @@ Create a comparator:
 ```cpp
 struct Compare
 {
-    bool operator()(
-        const Student& a,
-        const Student& b
-    ) const
+    bool operator()(const Student& a, const Student& b) const
     {
         return a.marks < b.marks;
     }
@@ -2022,10 +2019,7 @@ Comparator:
 ```cpp
 struct Compare
 {
-    bool operator()(
-        const Student& a,
-        const Student& b
-    ) const
+    bool operator()(const Student& a, const Student& b) const
     {
         if (a.marks != b.marks)
             return a.marks < b.marks;
@@ -2057,8 +2051,7 @@ struct Student
     int marks;
     string name;
 
-    Student(int marks, string name)
-        : marks(marks), name(name)
+    Student(int marks, string name): marks(marks), name(name)
     {
     }
 };
